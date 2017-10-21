@@ -4,6 +4,8 @@
 #include<unistd.h>
 #include<math.h> // sqrt()
 
+#define MAX_THREAD 100
+
 struct list_prime_t{
     int low;
     int high;
@@ -16,12 +18,12 @@ int status = 0;
 
 int main() {
     int N, n_thread, range, low = 1, i;
-    struct list_prime_t l_prime[100];
+    struct list_prime_t l_prime[MAX_THREAD];
 
     printf("Input range & number of threads (space seperated):\n");
     scanf("%d %d", &N, &n_thread);
 
-    pthread_t tid[100]; // Max 100 threads
+    pthread_t tid[MAX_THREAD];
     range = N/n_thread;
 
     // Initialize id and range for each thread
