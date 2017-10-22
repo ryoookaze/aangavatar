@@ -15,7 +15,6 @@ void runServer();
 void showHelp();
 std::vector<std::string> buildPlaylist();
 void showList(std::vector<std::string> list);
-void* bobok(void* args);
 struct Packet {
     int sock;
     std::string command;
@@ -34,7 +33,7 @@ int main() {
    // Run cvlc server
    runServer();
    sleep(1);
-   std::cout<<"cvlc server is now running\n";
+   std::cout<<"cvlc server is now up and running on localhost:10025\n";
 
    // Creating connection with cvlc
    if((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -83,7 +82,7 @@ int main() {
                command=="stop" || command=="resume") 
            std::cin>>aux;
        else {
-           std::cout<<"Unknown command.\n";
+           std::cout<<"\nUnknown command.\n\n";
        }
 
        // Packing packet
@@ -94,7 +93,8 @@ int main() {
        pthread_create(&tid, NULL, &sendPacket, &pack);
    }
 
-   std::cout<<"Shutting down cvlc server. Bye!\n";
+   // Killing server
+   std::cout<<"\nShutting down cvlc server. Bye!\n";
    send(sock, "shutdown\n", 10, 0);
 
    return 0;
@@ -116,7 +116,7 @@ void runServer() {
 }
 
 void showHelp() {
-    std::cout<<"TTPlayer v. beta-0\n"
+    std::cout<<"\nTTPlayer v. beta-0\n"
         <<"Command:\n"
         <<"   help\t\tShow this help text\n"
         <<"   list\t\tShow songs in the playlist\n"
@@ -124,7 +124,7 @@ void showHelp() {
         <<"   pause <t>\tPause the song after t seconds\n"
         <<"   resume <t>\tResume the song after t seconds\n"
         <<"   stop <t>\tStop the song after t seconds\n"
-        <<"   exit\t\tExit this program.\n";
+        <<"   exit\t\tExit this program.\n\n";
 }
 
 std::vector<std::string> buildPlaylist() {
